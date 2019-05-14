@@ -60,7 +60,7 @@ class Solution:
         total_string_len = len(s)
         max_remove_len = total_string_len-2 + 1 # what is the max length of removable characters in this string before it reaches to 2
         for total_remove in range(1,max_remove_len): # each time, what is maximum removable string in this given string
-                                                       # increase by 1 in each iteration               
+                                                     # increase by 1 in each iteration               
             # each time, when comfirm how much string to remove, this also defines
             # what is the length of the current string
             current_str_len = total_string_len - total_remove 
