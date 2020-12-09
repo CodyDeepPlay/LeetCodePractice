@@ -35,7 +35,7 @@ Constraints:
 Only one valid answer exists.
 """
 
-#%%  fist versin of code, a lot of for loops speed is slow
+#%% solution 1:  3 for loops speed and is very slow
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
     #def twoSum(self, nums, target):
@@ -76,12 +76,11 @@ class Solution:
               
         return output_list
         
-#%%
-
+#%% solution 2: two for loops, faster, but still slow
 
 class Solution:
-    #def twoSum(self, nums: List[int], target: int) -> List[int]:
-    def twoSum(self, nums, target):
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    #def twoSum(self, nums, target):
         
         '''
         The idea is that there are two numbers need to sum together to form the target, 
@@ -90,25 +89,26 @@ class Solution:
         '''
         
         output_list = []
+        exact_half_number_loc = []
+        smaller_than_half_num = []
                 
         half_search_num      = target//2
         half_search_residual = target%2
 
         
         # if the target is a even number, and the list contain two halves of the even number, then just find these two halves location
-        exact_half_number_loc = [loc for loc, val in enumerate(nums) if val==half_search_num]        
-        
-        
+
+        for loc, val in enumerate(nums):
+            if val==half_search_num: exact_half_number_loc.append(loc)
+            if val<=half_search_num: smaller_than_half_num.append(val)
+                    
         # where the input target is even number, there is two halves in the list
         if half_search_residual == 0 and len(exact_half_number_loc)==2:
-            output_list = exact_half_number_loc
-               
+            output_list = exact_half_number_loc           
         
         # other condition
         else:
-    
-            smaller_than_half_num = [val for loc, val in enumerate(nums) if val<=half_search_num]
-  
+
             # 2. for any given smaller_than_half_num, if the difference to target is in the original nums input list,
             # then this is the solution
             for value in smaller_than_half_num:
@@ -122,7 +122,80 @@ class Solution:
               
         return output_list
         
+#%% solution 3, use the target-"investigated value", and conduct search within 1 for loop, 
+# faster, runtime 48ms; less memory, take 14.4 MB memory.
+
+class Solution:
+   def twoSum(self, nums: List[int], target: int) -> List[int]:
+   #def twoSum(self, nums, target):
+        output = []
+        for loc, val in enumerate(nums):
+            my_compares_list = nums.copy()  # make a copy of the list, so that the original list is not get changed
+            my_compares_list.remove(val)      # remove the current value, so that we get the rest of the values in the list
+            complement = target-val 
+            
+            if complement in my_compares_list:
+                # location of the picked value
+                output.append(loc)  
+                
+                # lcoation of the residual value of the picked value from target
+                new_loc=my_compares_list.index(complement)  # in the orginigal list, find the residual value's location
+                if new_loc>=loc: new_loc+=1   # compensate 1 index if the "new_loc" is after "loc" in the originial list
+                output.append(new_loc)
+                output.sort()
+                break      # just need to find one solution, and task is done
+
+        return output
+
+
+#%%  solution 4, hashmap (map keys to its value pairs),
+# even it has two for loops, it takes the same time as the solution3 with one for loop,
+# it tells me that the hashable table is faster than list data structure
+
+# run time 48 ms, memory use 14.4 MB.
+
+'''
+From CS6400 Database class that I took from OMSCS program: 
+    hashing is applied a function to the hash field (key field), and yields
+    the address on the disk where the value is saved. 
+    
+In python, it is implemented through the built-in dictionary data type
+'''
         
+class Solution:
+   #def twoSum(self, nums: List[int], target: int) -> List[int]:
+   def twoSum(self, nums, target):
+
+       output    = []
+       nums_dict = {}
+       # this for loop just convert list into dictionary (a hashable table implemented in python)
+       # this will not cost to much time as it is not conduct searching at all
+       for loc, val in enumerate(nums):   
+           nums_dict.update( {loc: val} )
+    
+       for key, value in nums_dict.items():       # iterate through the dictionary, hashable table     
+           
+           complement = target-value  
+           temp_dict = nums_dict.copy()
+           del temp_dict[key]
+                    
+           if complement in temp_dict.values():
+               
+               output.append(key)
+               complement_index = list(temp_dict.values()).index(complement)
+               
+               if complement_index>=key: complement_index+=1
+               
+               output.append(complement_index) 
+               output.sort()
+                              
+               break
+
+       return output
+
+
+
+
 #%%
 
 nums = [2,7,11,15]

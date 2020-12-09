@@ -62,7 +62,8 @@ class Solution:
             return int(mystr)
         
         elif  len(locs_point) > 1  :
-        ?????????????? more than two fraction points
+            pass
+            #?????????????? more than two fraction points
         # remove all the empty strings
         # mystr = mystr.replace(' ','')  # right now, there is only strings for numbers and '+', '-', '.'
 
