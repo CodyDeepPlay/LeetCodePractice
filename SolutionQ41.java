@@ -59,7 +59,7 @@ public class SolutionQ41 {
     			// if current value is the same as smallest_int, then lift the smallest_int by 1
     			if (nums[n]==smallest_int) {smallest_int +=1;}
     			
-    			// if the smallest_int is already in the traking map, then update the smallest_int with 1
+    			// if the smallest_int is already in the tracking map, then update the smallest_int with 1
     			// until the smallest_int is no longer in the map
     			while (myMap.containsKey(smallest_int)) { smallest_int +=1; }
 
