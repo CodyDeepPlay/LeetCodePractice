@@ -18,6 +18,19 @@ A word is a maximal substring consisting of non-space characters only.
 """
 
 class Solution:
+    
+    '''
+    Solution 1,
+    split the string with " ", which is space
+    
+    Because the string might have multiple spaces at the end of the non-space string,
+    So, after split with space " ", the end results might have multiple "", which is empty or None.
+    
+    Starting from the last element in the splited results, iterate until the non-empty element, that is the last word.
+    If the iteration reach all the way to the first, and no non-empty element is found, that means the input string is just some spaces,
+    then there is no last word, will return 0. 
+    
+    '''
     def lengthOfLastWord(self, s: str) -> int:
         
         if s=="" or s==" ": return 0
@@ -40,13 +53,38 @@ class Solution:
         # then get its length
         return len(words_list[idx])
 
+
+
+    '''
+    solution 2,
+    Using strip() method to remove any space " " at the beginning and end of the input string,
+    Then split by space " ".
+    
+    If there is any non empty word, the last element of the cleaned list is the last word.
+    
+    '''
+    def lengthOfLastWord2(self, s: str) -> int:
+        
+        # corner cases, when the input string is empty or space, no last word, 
+        if s=="" or s==" ": return 0
+        
+        # first remove the empty space at the begining and the end of the string, using strip method. 
+        # then split this cleaned string with space " ", this will generate a list of potential words.
+        clean_s = s.strip().split(" ")
+        
+        # it is possible that the input are multiple spaces (more than two)
+        # using strip will remove all the space at the begining and end of the string, no matter how many are there
+        if clean_s[-1]=="": return 0  # this means the original string are several spaces, no last word
+        else: return len(clean_s[-1])      # otherwis, the last element is the real last word
+
+
         
 #%%
         
-s = "Hello World"
+#s = "Hello World"
 #s = "a        "
-#s = "         "
+s = "         "
 my = Solution()
-result = my.lengthOfLastWord(s)
+result = my.lengthOfLastWord2(s)
 print(result)
 #print(needle[0:1])
