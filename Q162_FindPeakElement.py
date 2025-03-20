@@ -55,13 +55,52 @@ class Solution(object):
         return my_peaks
     
 
+
+#%%
+
+class Solution(object):
+    def findPeakElement(self, nums):
+        
+        '''
+        Practice in Mar-2025
+        '''
+        
+        if len(nums)==1: return 0  # there is only one number
+        
+        elif len(nums)==2: 
+            if   nums[0] > nums[1]: return 0
+            elif nums[0] < nums[1]: return 1
+            
+        elif len(nums) >=3:    
+            peak_idx = 0
+            for i in range(1,len(nums)-1):
+                if nums[i]>nums[i-1] and  nums[i]<=nums[i+1]: 
+                    peak_idx = i+1
+                
+                elif nums[i]>nums[i-1] and nums[i]>nums[i+1]:                   
+                    peak_idx = i
+                    break
+                
+            return peak_idx
+        
+
+
+
+
+#%%
+
+
+
+
+
+
 nums = [3]
-nums = [1,2]
-nums = [-2147483648,-2147483647]
-nums = [1,2, 3, 4]
+#nums = [1,2]
+#nums = [-2147483648,-2147483647]
+#nums = [1,2, 3, 4]
 nums = [41,22, 13, 4]
-nums = [1,2,3,1]
-nums = [1,2,1,3,5,6,4]
+#nums = [1,2,3,1]
+#nums = [1,2,1,3,5,6,4]
 
 
 myobject = Solution()

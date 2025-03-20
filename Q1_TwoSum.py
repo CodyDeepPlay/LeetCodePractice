@@ -156,7 +156,7 @@ class Solution:
 
 '''
 From CS6400 Database class that I took from OMSCS program: 
-    hashing is applied a function to the hash field (key field), and yields
+    hashing is appling a function to the hash field (key field), and yields
     the address on the disk where the value is saved. 
     
 In python, it is implemented through the built-in dictionary data type
@@ -197,6 +197,90 @@ class Solution:
 
 
 #%%
+'''
+
+Redo the pratice in Feb 2025.
+
+Searching the complement in the residual list
+'''
+
+import copy
+        
+class Solution:
+   #def twoSum(self, nums: List[int], target: int) -> List[int]:
+   def twoSum(self, nums, target):
+       
+       
+       for i in range(len(nums)):
+           
+           output = []
+           output.append(i)
+           diff = None
+           temp_list = copy.copy(nums)
+                      
+           a_num = nums[i]           
+           temp_list.pop(i)  # remove the current investigating element
+           
+           
+           diff = target - a_num  # how much diff from current value to target
+           
+           # if current value is the one we need to find
+           if diff in temp_list:
+               my_index = temp_list.index(diff)
+               output.append(my_index+1)  # because we removed one number, here is to show what the current index in the original array
+               return output
+               
+           # if not the number we need to find,     
+           else: 
+               
+               del output
+    
+           del temp_list
+
+       return output
+
+
+#%%
+
+'''
+
+Redo the pratice in Feb 2025.
+
+Searching the complement in the dictionary (hashtable)
+'''
+
+import copy
+        
+class Solution:
+   #def twoSum(self, nums: List[int], target: int) -> List[int]:
+   '''
+   Iterate through the list, for a given i, save the num as the key, and its index as the val
+   in the dict. 
+   
+   For a given num, compute the complement, target-num, if this difference exist in the dict,
+   Then, the current num(key) related index(val) and the complement(key) related index(val)
+   are the two index we need. 
+   
+   Return them in a format of a list. 
+   
+   '''    
+       
+   def twoSum(self, nums, target):
+       
+       mydict = {}   
+       for i, num in enumerate(nums):
+           complement = target-num
+      
+           if complement in mydict:  # if the complement is one of the keys in the dict        
+               output = [mydict[complement], i]         
+               return output       
+           else:
+               mydict.update({num:i}) # update the dict with new {val: index}
+                    
+
+       return None
+
+#%%
 
 nums = [2,7,11,15]
 target = 9
@@ -210,8 +294,8 @@ target = 6
 nums = [3,3]
 target = 6
 
-nums = [2,7,4, 4, 11,15]
-target = 8
+#nums = [2,7,4, 4, 11,15]
+#target = 8
 
 results = Solution()
 output = results.twoSum(nums, target)      
